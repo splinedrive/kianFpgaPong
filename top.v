@@ -194,24 +194,10 @@ localparam BALL_SPEED_X  = 2;
 localparam BALL_SPEED_Y  = 1;
 localparam BALL_SIZE     = 8;
 
-reg [10:0] ball_x_pos [4];
-reg [10:0] ball_y_pos [4];
-reg [10:0] ball_x       = 320;
-reg [10:0] ball_y       = 240-8;
+reg [10:0] ball_x       = SWIDTH>>1;
+reg [10:0] ball_y       = (SHEIGHT>>1)-(BALL_SIZE>>1);
 reg [10:0] ball_delta_x = BALL_SPEED_X;
 reg [10:0] ball_delta_y = BALL_SPEED_Y;
-
-initial begin
-    ball_x_pos[0] = 320;
-    ball_x_pos[1] = 100;
-    ball_x_pos[2] = 400;
-    ball_x_pos[3] = 25;
-
-    ball_y_pos[0] = 240-8;
-    ball_y_pos[1] = 100;
-    ball_y_pos[2] = 130;
-    ball_y_pos[3] = 400;
-end
 
 
 wire [10:0] xdiff = hcnt - ball_x;
