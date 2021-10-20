@@ -1,17 +1,39 @@
 # 12 MHz clock
 set_io -nowarn clk25  60 # 25Mhz
 
-set_io g 34
-set_io r 38
+#set_io g 34
+#set_io r 38
 
-set_io ck 33
-set_io b 37
+#set_io ck 33
+#set_io b 37
 
-set_io hs 29
-set_io de 32
+#set_io hs 29
+#set_io de 32
 
-set_io int_ 28
-set_io vs 31
+#set_io int_ 28
+#set_io vs 31
+
+set_io g3 9
+set_io g2 10 
+
+set_io vs 17
+set_io g1 15
+
+set_io hs 18
+set_io g0 16
+
+set_io b3 31
+set_io r3 28
+
+set_io b2 32
+set_io r2 29
+
+set_io b1 37
+set_io r1 33
+
+set_io b0 38
+set_io r0 34
+
 
 set_io A0 141 
 set_io B0 142

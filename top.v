@@ -36,26 +36,41 @@ module top(
            output wire la,
            output wire ra,
 
-           output wire r,
-           output wire g,
-           output wire b,
+           output wire r0,
+           output wire r1,
+           output wire r2,
+           output wire r3,
 
-           output wire ck,
+           output wire g0,
+           output wire g1,
+           output wire g2,
+           output wire g3,
+
+           output wire b0,
+           output wire b1,
+           output wire b2,
+           output wire b3,
+
 
            output wire hs,
-           output wire de,
-
-           output wire int_,
            output wire vs
        );
 
 localparam FPGA_FREQUENCY = 25_000_000;
+
+
+assign {r0, r1, r2, r3} = {4{r}};
+assign {g0, g1, g2, g3} = {4{g}};
+assign {b0, b1, b2, b3} = {4{b}};
+
+wire r, g, b;
 
 reg [5:0] reset_cnt = 0;
 wire resetn = &reset_cnt;
 always @(posedge clk) begin
     reset_cnt <= reset_cnt + {4'b0, !resetn};
 end
+
 
 // for porting use pll to have 25 MHz
 //wire clk = clk12;
@@ -72,8 +87,8 @@ wire hsync;
 wire vsync;
 wire blank;
 
-assign ck = clk;
-assign de = ~blank;
+//assign ck = clk;
+//assign de = ~blank;
 assign hs = hsync;
 assign vs = vsync;
 
@@ -314,8 +329,8 @@ wire score1_gfx          = score1_shown ? digit_bits[ (score1_xdiff >> SCORE1_SC
 
 //////////////////////
 
-assign {r,g,b, int_} = ~blank ? {{3{paddle_gfx0 | paddle_gfx1 |
-                                    ball_gfx    | strip_gfx | score0_gfx | score1_gfx}}, 1'b0} : 4'b0;
+assign {r,g,b} = ~blank ? {{3{paddle_gfx0 | paddle_gfx1 |
+                              ball_gfx    | strip_gfx | score0_gfx | score1_gfx}}} : 3'b0;
 
 
 //////////////////////////////////
