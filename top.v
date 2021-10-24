@@ -357,7 +357,7 @@ function [4:0] reverse;
     input [4:0] d;
     integer i;
     begin
-        for (i = 0; i < 5; i++)
+        for (i = 0; i < 5; i = i + 1)
             reverse[i] = d[4-i];
     end
 endfunction
