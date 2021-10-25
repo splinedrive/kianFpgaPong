@@ -309,7 +309,6 @@ localparam SCORE0_WIDTH    = 5;
 reg [3:0]   score0_bcd   = 0;
 wire [10:0] score0_xdiff = hcnt - SCORE0_X;
 wire [10:0] score0_ydiff = vcnt - SCORE0_Y;
-wire [2 :0] y_offset     = (score0_ydiff >> SCORE0_SCALE_Y);
 wire score0_shown        = (score0_xdiff < (SCORE0_WIDTH << SCORE0_SCALE_X) ) && (score0_ydiff < (SCORE0_HEIGHT << SCORE0_SCALE_Y));
 wire score0_gfx          = score0_shown ? digit_bits[ (score0_xdiff >> SCORE0_SCALE_X) & 'd15 ] : 1'b0;
 
@@ -323,7 +322,6 @@ localparam SCORE1_WIDTH    = 5;
 reg [3:0]   score1_bcd   = 0;
 wire [10:0] score1_xdiff = hcnt - SCORE1_X;
 wire [10:0] score1_ydiff = vcnt - SCORE1_Y;
-wire [2 :0] y_offset     = (score1_ydiff >> SCORE1_SCALE_Y);
 wire score1_shown        = (score1_xdiff < (SCORE1_WIDTH << SCORE1_SCALE_X) ) && (score1_ydiff < (SCORE1_HEIGHT << SCORE1_SCALE_Y));
 wire score1_gfx          = score1_shown ? digit_bits[ (score1_xdiff >> SCORE1_SCALE_X) & 'd15 ] : 1'b0;
 
@@ -374,11 +372,13 @@ function [4:0] reverse;
     input [4:0] d;
     integer i;
     begin
-        for (i = 0; i < 5; i++)
+        for (i = 0; i < 5; i = i + 1)
             reverse[i] = d[4-i];
     end
 endfunction
 
+
+wire [2 :0] y_offset     = (score0_ydiff >> SCORE0_SCALE_Y) | (score1_ydiff >> SCORE1_SCALE_Y);
 
 wire [4:0] digit_bits = reverse(digit_bit_array[digit][y_offset]);
 
